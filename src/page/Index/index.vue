@@ -134,6 +134,25 @@
           <table>
             <thead>
               <tr>
+                <th>benchMark</th>
+                <th>Price</th>
+                <th>Delta</th>
+                <th>Delta_Pct</th>
+                <th>Gamma</th>
+                <th>Gamma_Pct</th>
+                <th>Theta</th>
+                <th>Theta_Pct</th>
+                <th>Vega</th>
+                <th>Vega_Pct</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td v-for="(val, vindex) in benchList" :key="vindex">{{val}}</td>
+              </tr>
+            </tbody>
+            <thead>
+              <tr>
                 <th>sum</th>
                 <th>Price</th>
                 <th>Delta</th>
@@ -147,8 +166,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(row, rindex) in sumList" :key="rindex" >
-                <td v-for="(val, vindex) in row" :key="vindex">{{val}}</td>
+              <tr >
+                <td v-for="(val, vindex) in sumList" :key="vindex">{{val}}</td>
               </tr>
             </tbody>
             <thead>
@@ -171,6 +190,25 @@
         <table class="active" v-show="!loaddingClass">
           <thead>
             <tr>
+              <th>benchMark</th>
+              <th>Price</th>
+              <th>Delta</th>
+              <th>Delta_Pct</th>
+              <th>Gamma</th>
+              <th>Gamma_Pct</th>
+              <th>Theta</th>
+              <th>Theta_Pct</th>
+              <th>Vega</th>
+              <th>Vega_Pct</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td v-for="(val, vindex) in benchList" :key="vindex">{{val}}</td>
+            </tr>
+          </tbody>
+          <thead>
+            <tr>
               <th>sum</th>
               <th>Price</th>
               <th>Delta</th>
@@ -184,8 +222,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(row, rindex) in sumList" :key="rindex" >
-              <td v-for="(val, vindex) in row" :key="vindex">{{val}}</td>
+            <tr>
+              <td v-for="(val, vindex) in sumList" :key="vindex">{{val}}</td>
             </tr>
           </tbody>
           <thead>

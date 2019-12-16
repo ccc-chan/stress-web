@@ -8,15 +8,15 @@ export default {
         volatility_bump: '1.0',
         price_bump: '1.0',
         timeShift: '2019-07-08',
-        OM: '0.023',
-        TM: '0.0251',
-        SM: '0.0256',
-        NM: '0.0257',
-        OY: '0.0259',
-        SY: '0.0265',
-        TY: '0.0271',
-        FY: '0.028',
-        HY: '0.0288',
+        OM: '0.0229471',
+        TM: '0.0250464',
+        SM: '0.0254817',
+        NM: '0.0255681',
+        OY: '0.0258563',
+        SY: '0.0263679',
+        TY: '0.0270334',
+        FY: '0.0279025',
+        HY: '0.0287345',
       },
       tableList: [],
       // history
@@ -33,6 +33,7 @@ export default {
       hLeft: 0,
       hHeight: 0,
       show: false,
+      benchList: [],
     }
   },
   methods: {
@@ -124,6 +125,32 @@ export default {
           console.log(err);
         })
     },
+    benchMark(type){
+      let self = this;
+      self.benchList = []
+      self.queryData.timeShift = self.timeShift;
+      self.queryData.price_bump = '1.0';
+      self.queryData.volatility_bump = '1.0';
+      let params = {
+        query: self.queryData
+      }
+      if (type == 'id') {
+        self.$axios.post('/searchById/', params)
+          .then(res => {
+            let obj = eval('(' + res.data + ')');
+            self.benchList = self.sum(obj.sum);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      }else{
+        self.$axios.post('/searchByWind/', params)
+          .then(res => {
+            let obj = eval('(' + res.data + ')');
+            self.benchList = self.sum(obj.sum);
+          })
+      }
+    },
     searchId() {
       let self = this;
       self.tableList = []
@@ -133,6 +160,7 @@ export default {
       if (check == false) {
         return
       }
+      
       let params = {
         query: self.queryData
       }
@@ -140,7 +168,8 @@ export default {
         .then(res => {
           let obj = eval('(' + res.data + ')');
           self.tableList = self.toFixed(obj.data);
-          self.sumList = self.toFixed(obj.sum);
+          self.sumList = self.sum(obj.sum);
+          self.benchMark('id')
         })
         .catch(err => {
           console.log(err);
@@ -156,7 +185,7 @@ export default {
       if (check == false) {
         return
       }
-
+      
       let params = {
         query: self.queryData
       }
@@ -165,14 +194,26 @@ export default {
         .then(res => {
           let obj = eval('(' + res.data + ')');
           self.tableList = self.toFixed(obj.data);
-          self.sumList = self.toFixed(obj.sum);
+          self.sumList = self.sum(obj.sum);
           
+          self.benchMark('wind')
           self.loaddingClass = false;
 
         })
         .catch(err => {
           console.log(err);
         })
+    },
+    sum(arr){
+      for (const i in arr) {
+        if (i > 0) {
+          arr[i] = Math.round(arr[i] * 10000) / 10000
+        }
+        else {
+          arr[i] = '-'
+        }
+      }
+      return arr;
     },
     check(type){
       let self = this;
@@ -200,7 +241,6 @@ export default {
 
     },
     toFixed(obj){
-      let self = this;
       let tmpArr = [];
       let resultArr = [];
       for (let j = 0; j < obj[0].length; j++) {

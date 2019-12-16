@@ -84,8 +84,8 @@
     overflow: hidden;
     .table-scroll-box {
       white-space: nowrap;
-      overflow: scroll;
-      height: 500px;
+      overflow-y: scroll;
+      height: 550px;
       z-index: 1001px;
       .fixed-head {
         position: absolute;
@@ -100,17 +100,16 @@
       }
     }
     .table-scroll-box::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 0px;
+      height: 0px;
     }
   }
 
   .table{
     height: 500px;
-    overflow-y: auto;
     margin-bottom: 50px;
     .loadding{
-      margin: 20px auto;
+      margin: 250px auto;
       width: 960px;
       img{
         display: block;
