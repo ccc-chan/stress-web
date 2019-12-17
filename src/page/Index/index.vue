@@ -119,7 +119,7 @@
         <el-row>
           <el-col :span="6">
             <el-form-item label="图形类型：">
-              <el-select v-model="queryData.type" placeholder="请选择" @change="selectChart()">
+              <el-select v-model="queryData.type" placeholder="请选择" >
                 <el-option
                   v-for="item in options"
                   :key="item.value"
