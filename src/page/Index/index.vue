@@ -9,28 +9,22 @@
               <span v-model="createTime.hTime">{{createTime.hTime}}</span>
             </div>
           </el-col>
-          <el-col :span="12">
-            <div class="el-form-item tip">
-              <label for="">即时文件创建时间：</label>
-              <span v-model="createTime.sTime">{{createTime.sTime}}</span>
-            </div>
-          </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <div class="el-form-item upload">
               <input class="name-input" type="text" v-model="fileName" placeholder="请上传xls、xlsx格式的Excel文件" readonly>
               <input class="hide-input ui-input-file" @change="loadFile($event)" type="file" id="excel" name="file">
-              <a href="javascript:;" @click="uploadHistory()">上传历史文件</a>
+              <a href="javascript:;" @click="uploadHistory()">上传数据文件</a>
             </div>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <div class="el-form-item upload">
               <input class="name-input" type="text" v-model="fileName1" placeholder="请上传xls、xlsx格式的Excel文件" readonly>
               <input class="hide-input ui-input-file" @change="loadFile1($event)" type="file" id="excel1" name="file1">
               <a href="javascript:;" @click="uploadSigma()">上传即时文件</a>
             </div>
-          </el-col>
+          </el-col> -->
         </el-row>
         <transition-group name="slide-fade">
           <el-row v-if="show" key="a">
@@ -119,6 +113,20 @@
               <el-button type="primary" @click="show = !show">show</el-button>
               <el-button type="primary" @click="searchId()">search by ID</el-button>
               <el-button type="primary" @click="searchWind()">search by Wind</el-button>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="图形类型：">
+              <el-select v-model="queryData.type" placeholder="请选择" @change="selectChart()">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -247,6 +255,11 @@
           </tbody>  
         </table>
       </div>
+    </div>
+      <div id="heat" class="heat" style="width:100%;height:600px;margin: 0 auto 50px;background: #222a41;"> </div>
+      <!-- <heat-map :heatData="heatData" :max="maxData" :min="minData" ></heat-map> -->
+    <div>
+      
     </div>
   </div>
 </template>
