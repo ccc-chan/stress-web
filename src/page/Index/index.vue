@@ -86,37 +86,28 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
+            <el-form-item label="标的代码：">
+              <el-input v-model="queryData.contract_name" placeholder="请输入标的代码"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
             <el-form-item label="日期：">
               <el-date-picker v-model="timeShift" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
               <!-- <el-input v-model="queryData.timeShift" placeholder="请输入timeShift"></el-input> -->
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="6">
             <el-form-item label="价格扰动：">
               <el-input v-model="queryData.price_bump" placeholder="请输入价格扰动"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="6">
             <el-form-item label="波动率扰动：">
               <el-input v-model="queryData.volatility_bump" placeholder="请输入波动率扰动"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="标的代码：">
-              <el-input v-model="queryData.contract_name" placeholder="请输入标的代码"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item class="btn">
-              <el-button type="primary" @click="show = !show">show</el-button>
-              <el-button type="primary" @click="searchId()">search by ID</el-button>
-              <el-button type="primary" @click="searchWind()">search by Wind</el-button>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="6">
             <el-form-item label="图形类型：">
               <el-select v-model="queryData.type" placeholder="请选择" >
@@ -127,6 +118,15 @@
                   :value="item.value">
                 </el-option>
               </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12" style="float: right;">
+            <el-form-item class="btn">
+              <el-button type="primary" @click="show = !show">show</el-button>
+              <el-button type="primary" @click="searchId()">search by ID</el-button>
+              <el-button type="primary" @click="searchWind()">search by Wind</el-button>
             </el-form-item>
           </el-col>
         </el-row>
