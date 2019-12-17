@@ -256,8 +256,8 @@
         </table>
       </div>
     </div>
-      <!-- <div id="heat" class="container" style="width:100%;height:500px;margin: 0 auto;background: #222a41;"> </div> -->
-      <heat-map :heatData="heatData" :max="maxData" :min="minData" ></heat-map>
+      <div id="heat" class="heat" style="width:100%;height:600px;margin: 0 auto 50px;background: #222a41;"> </div>
+      <!-- <heat-map :heatData="heatData" :max="maxData" :min="minData" ></heat-map> -->
     <div>
       
     </div>

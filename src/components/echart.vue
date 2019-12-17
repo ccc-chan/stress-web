@@ -58,8 +58,8 @@ export default {
             }
           },
           visualMap: {
-            min: minData,
-            max: maxData,
+            min: min,
+            max: max,
             calculable: true,
             orient: 'horizontal',
             left: 'center',
@@ -96,6 +96,7 @@ export default {
     watch: {
       heateData:{
         handler (newVal, oldVal) {
+          console.log(123123)
           this.init();
         },
         deep: true

@@ -84,13 +84,89 @@ export default {
       self.$axios.post('/selectChart/', params)
         .then(res => {
           let heatArr = eval('(' + res.data + ')');
-          self.heatData = heatArr[0];
-          self.maxData = Math.round(heatArr[1] * 10000) / 10000;
-          self.minData = Math.round(heatArr[2] * 10000) / 10000;
-          self.heatData.forEach(item => {
-            item[2] = Math.round(item[2] * 10000) / 10000 || '-';
-            return [item[1], item[0], item[2]];
+          let heatData = heatArr[0];
+          let maxData = Math.round(heatArr[1] * 10000) / 10000;
+          let minData = Math.round(heatArr[2] * 10000) / 10000;
+          heatData.forEach(item => {
+            if (item[2] == 0) {
+              return item[2] = 0.000
+            }
+            return item[2] = Math.round(item[2] * 10000) / 10000;
           });
+
+          let option = {
+            tooltip: {
+              position: 'top'
+            },
+            animation: false,
+            grid: {
+              height: '70%',
+              y: '10%'
+            },
+            xAxis: {
+              type: 'category',
+              data: limits,
+              splitArea: {
+                show: true
+              },
+              axisLabel: {
+                show: true,
+                textStyle: {
+                  color: '#fff'
+                },
+                // 让字体完全显示
+                interval: 0
+              }
+            },
+            yAxis: {
+              type: 'category',
+              data: limits,
+              splitArea: {
+                show: true
+              },
+              axisLabel: {
+                show: true,
+                textStyle: {
+                  color: '#fff'
+                },
+                // 让字体完全显示
+                interval: 0
+              }
+            },
+            visualMap: {
+              min: minData,
+              max: maxData,
+              calculable: true,
+              orient: 'horizontal',
+              left: 'center',
+              precision: 3,
+              bottom: '5%',
+              inRange: {
+                color: ['#313695', '#4575b4', '#74add1', '#269f3c','#942e38', '#f46d43', '#d73027', '#a50026']
+              },
+              textStyle: {
+                color: '#fff' //legend字体颜色 
+              }
+            },
+            series: [{
+              // name: 'Punch Card',
+              type: 'heatmap',
+              data: heatData,
+              label: {
+                normal: {
+                  show: true
+                }
+              },
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
+            }]
+          };
+          const chartObj = this.$echarts.init(document.getElementById('heat'));
+          chartObj.setOption(option, true);
         })
         .catch(err => {
           console.log(err);
@@ -188,6 +264,8 @@ export default {
       let self = this;
       self.benchList = []
       self.queryData.timeShift = self.timeShift;
+      let oldPrice = self.queryData.price_bump
+      let oldvolat = self.queryData.volatility_bump
       self.queryData.price_bump = '1.0';
       self.queryData.volatility_bump = '1.0';
       let params = {
@@ -198,6 +276,8 @@ export default {
           .then(res => {
             let obj = eval('(' + res.data + ')');
             self.benchList = self.sum(obj.sum);
+            self.queryData.price_bump = oldPrice
+            self.queryData.volatility_bump = oldvolat
           })
           .catch(err => {
             console.log(err);
@@ -223,6 +303,7 @@ export default {
       let params = {
         query: self.queryData
       }
+      
       self.$axios.post('/searchById/', params)
         .then(res => {
           let obj = eval('(' + res.data + ')');
