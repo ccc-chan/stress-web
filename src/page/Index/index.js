@@ -1,4 +1,8 @@
+import HeatMap from '../../components/echart.vue'
 export default {
+  components: {
+    "heat-map": HeatMap
+  },
   data() {
     return {
       labelPosition: 'right',
@@ -18,6 +22,36 @@ export default {
         FY: '0.0279025',
         HY: '0.0287345',
       },
+      options: [
+        {
+          value: 'Price',
+          label: 'Price'
+        }, {
+          value: 'Delta',
+          label: 'Delta'
+        }, {
+          value: 'Delta_Pct',
+          label: 'Delta_Pct'
+        }, {
+          value: 'Gamma',
+          label: 'Gamma'
+        }, {
+          value: 'Gamma_Pct',
+          label: 'Gamma_Pct'
+        }, {
+          value: 'Theta',
+          label: 'Theta'
+        }, {
+          value: 'Theta_Pct',
+          label: 'Theta_Pct'
+        }, {
+          value: 'Vega',
+          label: 'Vega'
+        }, {
+          value: 'Vega_Pct',
+          label: 'Vega_Pct'
+        }
+      ],
       tableList: [],
       // history
       fileName: '',
@@ -34,10 +68,35 @@ export default {
       hHeight: 0,
       show: false,
       benchList: [],
+      maxData: 0,
+      minData: 0,
+      heatData: [],
     }
   },
   methods: {
-    
+    selectChart(){
+      let self = this;
+      let params = {
+        query: self.queryData
+      }
+      let limits = ['-5%', '-4%', '-3%', '-2%', '-1%', '0', '1%',
+        '2%', '3%', '4%', '5%'];
+      self.$axios.post('/selectChart/', params)
+        .then(res => {
+          let heatArr = eval('(' + res.data + ')');
+          self.heatData = heatArr[0];
+          self.maxData = Math.round(heatArr[1] * 10000) / 10000;
+          self.minData = Math.round(heatArr[2] * 10000) / 10000;
+          self.heatData.forEach(item => {
+            item[2] = Math.round(item[2] * 10000) / 10000 || '-';
+            return [item[1], item[0], item[2]];
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      
+    }, 
     loadFile(e) {
       let self = this;
       let files = e.target.files;
@@ -48,50 +107,50 @@ export default {
         self.historyFiles = files;
       }
     },
-    loadFile1(e) {
-      let self = this;
-      let files = e.target.files;
-      self.fileName1 = "";
-      self.sigmaFiles = {};
-      // document.getElementById('excel').value="";
-      if (files && files.length > 0) {
-        self.fileName1 = self.fileName1 + files[0].name + ";";
-        self.sigmaFiles = files;
-      }
-    },
-    uploadSigma() {
-      let self = this;
+    // loadFile1(e) {
+    //   let self = this;
+    //   let files = e.target.files;
+    //   self.fileName1 = "";
+    //   self.sigmaFiles = {};
+    //   // document.getElementById('excel').value="";
+    //   if (files && files.length > 0) {
+    //     self.fileName1 = self.fileName1 + files[0].name + ";";
+    //     self.sigmaFiles = files;
+    //   }
+    // },
+    // uploadSigma() {
+    //   let self = this;
 
-      // 校验文件上传是否为空
-      if (JSON.stringify(self.sigmaFiles) === '{}') {
-        alert("请选择上传的文件");
-        return false
-      }
-      //  文件上传参数
+    //   // 校验文件上传是否为空
+    //   if (JSON.stringify(self.sigmaFiles) === '{}') {
+    //     alert("请选择上传的文件");
+    //     return false
+    //   }
+    //   //  文件上传参数
 
-      let name = self.sigmaFiles[0].name.substring(self.sigmaFiles[0].name.lastIndexOf(".") + 1).toLowerCase();
-      if (name != "xlsx" && name != "xls") {
-        alert("请选择.xlsx格式文件上传！");
-        return
-      }
+    //   let name = self.sigmaFiles[0].name.substring(self.sigmaFiles[0].name.lastIndexOf(".") + 1).toLowerCase();
+    //   if (name != "xlsx" && name != "xls") {
+    //     alert("请选择.xlsx格式文件上传！");
+    //     return
+    //   }
 
-      let fd = new FormData();
-      fd.append("sigmaFiles", document.getElementById("excel1").files[0]);
+    //   let fd = new FormData();
+    //   fd.append("sigmaFiles", document.getElementById("excel1").files[0]);
 
-      self.$axios.post('/uploadSigma/', fd)
-        .then(res => {
-          if (res.data) {
-            document.getElementById('excel1').value = "";
-            self.sigmaFiles = {};
-            self.fileName1 = '';
-            self.createTime = res.data;
-            alert('即时文件上传成功');
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    },
+    //   self.$axios.post('/uploadSigma/', fd)
+    //     .then(res => {
+    //       if (res.data) {
+    //         document.getElementById('excel1').value = "";
+    //         self.sigmaFiles = {};
+    //         self.fileName1 = '';
+    //         self.createTime = res.data;
+    //         alert('即时文件上传成功');
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     })
+    // },
     uploadHistory() {
       let self = this;
 
