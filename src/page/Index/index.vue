@@ -2,30 +2,6 @@
   <div class="index">
     <div class="content">
       <el-form :inline="true" :label-position="labelPosition" class="demo-form-inline">
-        <el-row>
-          <el-col :span="12">
-            <div class="el-form-item tip">
-              <label for="">历史文件创建时间：</label>
-              <span v-model="createTime.hTime">{{createTime.hTime}}</span>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <div class="el-form-item upload">
-              <input class="name-input" type="text" v-model="fileName" placeholder="请上传xls、xlsx格式的Excel文件" readonly>
-              <input class="hide-input ui-input-file" @change="loadFile($event)" type="file" id="excel" name="file">
-              <a href="javascript:;" @click="uploadHistory()">上传数据文件</a>
-            </div>
-          </el-col>
-          <!-- <el-col :span="12">
-            <div class="el-form-item upload">
-              <input class="name-input" type="text" v-model="fileName1" placeholder="请上传xls、xlsx格式的Excel文件" readonly>
-              <input class="hide-input ui-input-file" @change="loadFile1($event)" type="file" id="excel1" name="file1">
-              <a href="javascript:;" @click="uploadSigma()">上传即时文件</a>
-            </div>
-          </el-col> -->
-        </el-row>
         <transition-group name="slide-fade">
           <el-row v-if="show" key="a">
             <el-col :span="6">
@@ -122,12 +98,27 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12" style="float: right;">
+          <el-col :span="12">
+            <div class="el-form-item upload">
+              <input class="name-input" type="text" v-model="fileName" placeholder="请上传xls、xlsx格式的Excel文件" readonly>
+              <input class="hide-input ui-input-file" @change="loadFile($event)" type="file" id="excel" name="file">
+              <a href="javascript:;" @click="uploadHistory()">上传数据文件</a>
+            </div>
+          </el-col>
+          <el-col :span="12">
             <el-form-item class="btn">
               <el-button type="primary" @click="show = !show">show</el-button>
               <el-button type="primary" @click="searchId()">search by ID</el-button>
               <el-button type="primary" @click="searchWind()">search by Wind</el-button>
             </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <div class="el-form-item tip">
+              <label for="">历史文件创建时间：</label>
+              <span v-model="createTime.hTime">{{createTime.hTime}}</span>
+            </div>
           </el-col>
         </el-row>
       </el-form>
