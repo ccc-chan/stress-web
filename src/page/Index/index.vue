@@ -144,7 +144,7 @@
       <table>
         <thead>
           <tr>
-            <th width="10%">benchMark</th>
+            <th width="10%">加总</th>
             <th width="10%">Price</th>
             <th width="6%">Delta(万)</th>
             <th width="10%">Delta_Pct(%)</th>
@@ -176,7 +176,7 @@
           <table>
             <thead>
               <tr>
-                <th width="10%">benchMark</th>
+                <th width="10%">ID</th>
                 <th width="10%">Price</th>
                 <th width="6%">Delta(万)</th>
                 <th width="10%">Delta_Pct(%)</th>
