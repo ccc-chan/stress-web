@@ -94,8 +94,10 @@ export default {
       if (self.queryData.type == 'Delta' || self.queryData.type == 'Gamma' || self.queryData.type == 'Theta'
         || self.queryData.type == 'Vega' || self.queryData.type == 'PV') {
         chartTitle = '单位（万）'
+      } else if (self.queryData.type == 'Price') {
+        chartTitle = ''
       }else{
-        chartTitle = '单位（元）'
+        chartTitle = '单位（%）'
       }
       
       heatData.forEach(item => {
