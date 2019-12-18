@@ -16,5 +16,7 @@ export default {
 #app {
   background: #1b2338;
   height: 100%;
+  position: relative;
 }
+
 </style>

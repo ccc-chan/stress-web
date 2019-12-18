@@ -20,7 +20,7 @@ export default {
         SY: '0.0263679',
         TY: '0.0270334',
         FY: '0.0279025',
-        HY: '0.0287345',
+        // HY: null,
         type:'Price'
       },
       options: [
@@ -51,6 +51,10 @@ export default {
         }, {
           value: 'Vega_Pct',
           label: 'Vega_Pct'
+        },
+        {
+          value: 'PV',
+          label: 'PV'
         }
       ],
       tableList: [],
@@ -75,25 +79,42 @@ export default {
     }
   },
   methods: {
-    change(){
-      let self = this;
-      console.log(self.queryData.type)
-    },
     selectChart(heatArr) {
+      let self = this;
       let heatData = heatArr[0];
       let maxData = Math.round(heatArr[1] * 10000) / 10000;
       let minData = Math.round(heatArr[2] * 10000) / 10000;
-      let limits = ['-5%', '-4%', '-3%', '-2%', '-1%', '0', '1%',
+      let ytitle = ['-5%', '-4%', '-3%', '-2%', '-1%', '波动率', '1%',
         '2%', '3%', '4%', '5%'];
+      let xtitle = ['-5%', '-4%', '-3%', '-2%', '-1%', '标的价格', '1%',
+        '2%', '3%', '4%', '5%'
+      ];
+      
+      let chartTitle = ''
+      if (self.queryData.type == 'Delta' || self.queryData.type == 'Gamma' || self.queryData.type == 'Theta'
+        || self.queryData.type == 'Vega' || self.queryData.type == 'PV') {
+        chartTitle = '单位（万）'
+      }else{
+        chartTitle = '单位（元）'
+      }
       
       heatData.forEach(item => {
         if (item[2] == 0) {
           return item[2] = 0.000
         }
+
         return item[2] = Math.round(item[2] * 10000) / 10000;
       });
 
       let option = {
+        title: {
+          text: chartTitle,
+          left: '3%',
+          top: '2%',
+          textStyle: {
+            color: '#fff'
+          },
+        },
         tooltip: {
           position: 'top'
         },
@@ -104,7 +125,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: limits,
+          data: xtitle,
           splitArea: {
             show: true
           },
@@ -119,7 +140,7 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: limits,
+          data: ytitle,
           splitArea: {
             show: true
           },
@@ -213,7 +234,6 @@ export default {
     },
     benchMark(type){
       let self = this;
-      self.benchList = []
       self.queryData.timeShift = self.timeShift;
       let oldPrice = self.queryData.price_bump
       let oldvolat = self.queryData.volatility_bump
@@ -244,15 +264,13 @@ export default {
     searchId() {
       let self = this;
       self.tableList = []
-      
+      self.benchList = []
       self.queryData.timeShift = self.timeShift;
       let check = self.check('id');
       if (check == false) {
         return
       }
       
-      // self.queryData.type = self.optionType
-      console.log(self.queryData.type)
       let params = {
         query: self.queryData
       }
@@ -264,36 +282,6 @@ export default {
           self.sumList = self.sum(obj.sum);
           self.benchMark('id');
           self.selectChart(obj.heatMap);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    },
-    searchWind() {
-      let self = this;
-      self.tableList = [];
-      
-      self.queryData.timeShift = self.timeShift;
-
-      let check = self.check('wind');
-      if (check == false) {
-        return
-      }
-      
-      let params = {
-        query: self.queryData
-      }
-      self.loaddingClass = true;
-      self.$axios.post('/searchByWind/', params)
-        .then(res => {
-          let obj = eval('(' + res.data + ')');
-          self.tableList = self.toFixed(obj.data);
-          self.sumList = self.sum(obj.sum);
-          
-          self.benchMark('wind')
-          self.selectChart(obj.heatMap);
-          self.loaddingClass = false;
-
         })
         .catch(err => {
           console.log(err);
@@ -340,7 +328,7 @@ export default {
       let resultArr = [];
       for (let j = 0; j < obj[0].length; j++) {
         tmpArr = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 11; i++) {
           let num;
           if (i > 0) {
             if (obj[i][j] == null) {
