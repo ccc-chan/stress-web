@@ -64,7 +64,7 @@ export default {
       // sigma
       fileName1: '',
       sigmaFiles: {},
-      loaddingClass: false,
+      loadingClass: false,
       createTime: {},
       timeShift: '2019-07-08',
       sumList: [],
@@ -102,10 +102,12 @@ export default {
       
       heatData.forEach(item => {
         if (item[2] == 0) {
-          return item[2] = 0.000
+          return item[2]  //for the black block in the middle. item[2] = 0.000
+        }else{
+          return item[2]  //I have changed here
         }
 
-        return item[2] = Math.round(item[2] * 10000) / 10000;
+        //  return item[2] = Math.round(item[2] * 10000) / 10000;
       });
 
       let option = {
@@ -280,6 +282,7 @@ export default {
       self.$axios.post('/searchById/', params)
         .then(res => {
           let obj = eval('(' + res.data + ')');
+          //console.log(res.data)
           self.tableList = self.toFixed(obj.data);
           self.sumList = self.sum(obj.sum);
           self.benchMark('id');

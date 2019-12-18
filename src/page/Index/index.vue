@@ -103,7 +103,8 @@
           <el-col :span="8">
             <div class="el-form-item tip">
               <label for="">历史文件创建时间：</label>
-              <span v-model="createTime.hTime">{{createTime.hTime}}</span>
+              <span>{{createTime.hTime}}</span> 
+              <!--<span v-model="createTime.hTime">-->
             </div>
           </el-col>
         </el-row>
@@ -168,8 +169,8 @@
 
     <div class="table table-scroll-mod">
       <div class="table-scroll-box" ref="tableScrollBox">
-        <div class="loadding" v-show="loaddingClass">
-          <img src="../../assets/loadding.gif" alt="">
+        <div class="loading" v-show="loadingClass">
+          <img src="../../assets/loading.gif" alt="">
         </div>
         <!-- fixed -->
         <div class="fixed-head" ref="tableFixedHead">
@@ -192,7 +193,7 @@
           </table>
         </div>
         <!-- active -->
-        <table class="active" v-show="!loaddingClass">
+        <table class="active" v-show="!loadingClass">
           <thead>
             <tr>
               <th width="10%">benchMark</th>
