@@ -4,10 +4,10 @@ export default {
       labelPosition: 'right',
       queryData: {
         ID: '19461157',
-        contract_name: '000016.SH',
+        //contract_name: '000016.SH',
         volatility_bump: '1.0',
         price_bump: '1.0',
-        timeShift: '2019-07-08',
+        //timeShift: '2019-07-08', //gets value from self.timeshift before query
         OM: '0.0229471',
         TM: '0.0250464',
         SM: '0.0254817',
@@ -17,13 +17,14 @@ export default {
         TY: '0.0270334',
         FY: '0.0279025',
         // HY: null,
-        type:'Price'
+        type:'PV'
       },
       options: [
         {
-          value: 'Price',
-          label: 'Price'
-        }, {
+          value: 'PV',
+          label: 'PV'
+        },
+        {
           value: 'Delta',
           label: 'Delta'
         }, {
@@ -49,9 +50,9 @@ export default {
           label: 'Vega_Pct'
         },
         {
-          value: 'PV',
-          label: 'PV'
-        }
+          value: 'Price',
+          label: 'Price'
+        }        
       ],
       tableList: [],
       // history
@@ -62,7 +63,7 @@ export default {
       sigmaFiles: {},
       loadingClass: false,
       createTime: {},
-      timeShift: '2019-07-08',
+      timeShift: "2019-07-08", //works as a placeholder and self.timeshift
       sumList: [],
       fixedHeader: false,
       hLeft: 0,
@@ -200,8 +201,8 @@ export default {
       //  文件上传参数
 
       let name = self.historyFiles[0].name.substring(self.historyFiles[0].name.lastIndexOf(".") + 1).toLowerCase();
-      if (name != "xlsx" && name != "xls") {
-        alert("请选择.xlsx格式文件上传！");
+      if (name != "xls") {
+        alert("请选择.xls格式文件上传！");
         return
       }
 
@@ -225,6 +226,7 @@ export default {
     searchId() {
       let self = this;
       self.tableList = []
+      self.sumList = []
       self.benchList = []
       self.queryData.timeShift = self.timeShift;
       let check = self.check('id');
@@ -240,9 +242,9 @@ export default {
       self.$axios.post('/searchById/', params)
         .then(res => {
           let obj = eval('(' + res.data + ')');
-          self.tableList = self.toFixed(obj.data);
-          self.sumList = self.sum(obj.sum);
-          self.benchList = obj.benchMark
+          self.tableList = self.toFixed(obj.data); // ...
+          self.sumList = obj.sum; //use sum for "-" indicator
+          self.benchList = obj.benchMark;
           self.selectChart(obj.heatMap);
           self.loadingClass = false;
         })
@@ -250,6 +252,7 @@ export default {
           console.log(err);
         })
     },
+//Deprecated...
     sum(arr){
       for (const i in arr) {
         if (i > 0) {
@@ -261,6 +264,7 @@ export default {
       }
       return arr;
     },
+/////////////////////
     check(type){
       let self = this;
       if (type == 'id') {
@@ -286,18 +290,20 @@ export default {
       }
 
     },
+/////////////////////
     toFixed(obj){
       let tmpArr = [];
       let resultArr = [];
       for (let j = 0; j < obj[0].length; j++) {
         tmpArr = [];
-        for (let i = 0; i < 11; i++) {
+        for (let i = 0; i < 11; i++) { //from 0 to 10
           let num;
           if (i > 0) {
             if (obj[i][j] == null) {
               num = '-';
             } else {
-              num = Math.round(obj[i][j] * 10000) / 10000
+              num = obj[i][j]
+              //num = Math.round(obj[i][j] * 10000) / 10000
               // num = obj[i][j].toFixed(4);
             }
           } else {
@@ -310,6 +316,7 @@ export default {
       return resultArr;
     }
   },
+
   mounted() {
     let self = this;
     let box = self.$refs.tableScrollBox;
@@ -320,6 +327,7 @@ export default {
     }, false)
     
   }, 
+
   created() {
     let self = this;
     self.$axios.post('/createTime/')

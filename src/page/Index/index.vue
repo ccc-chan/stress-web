@@ -65,6 +65,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="日期：">
+              <!--Not queryData.timeShift-->
               <el-date-picker v-model="timeShift" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
           </el-col>
@@ -119,12 +120,14 @@
         </el-row>
       </el-form>
     </div>
+
+
     <div>
       <table>
         <thead>
           <tr>
             <th width="10%">benchMark</th>
-            <th width="10%">Price</th>
+            <th width="10%">PV(万)</th>
             <th width="6%">Delta(万)</th>
             <th width="10%">Delta_Pct(%)</th>
             <th width="6%">Gamma(万)</th>
@@ -133,7 +136,7 @@
             <th width="10%">Theta_Pct(%)</th>
             <th width="6%">Vega(万)</th>
             <th width="10%">Vega_Pct(%)</th>
-            <th width="6%">PV(万)</th>
+            <th width="6%">Price</th>
           </tr>
         </thead>
         <tbody>
@@ -146,7 +149,7 @@
         <thead>
           <tr>
             <th width="10%">加总</th>
-            <th width="10%">Price</th>
+            <th width="10%">PV(万)</th>
             <th width="6%">Delta(万)</th>
             <th width="10%">Delta_Pct(%)</th>
             <th width="6%">Gamma(万)</th>
@@ -155,7 +158,7 @@
             <th width="10%">Theta_Pct(%)</th>
             <th width="6%">Vega(万)</th>
             <th width="10%">Vega_Pct(%)</th>
-            <th width="6%">PV(万)</th>
+            <th width="6%">Price</th>
           </tr>
         </thead>
         <tbody>
@@ -173,12 +176,13 @@
           <img src="../../assets/loading.gif" alt="">
         </div>
         <!-- fixed -->
+        <!--
         <div class="fixed-head" ref="tableFixedHead">
           <table>
             <thead>
               <tr>
                 <th width="10%">ID</th>
-                <th width="10%">Price</th>
+                <th width="10%">PV(万)</th>
                 <th width="6%">Delta(万)</th>
                 <th width="10%">Delta_Pct(%)</th>
                 <th width="6%">Gamma(万)</th>
@@ -187,17 +191,18 @@
                 <th width="10%">Theta_Pct(%)</th>
                 <th width="6%">Vega(万)</th>
                 <th width="10%">Vega_Pct(%)</th>
-                <th width="6%">PV(万)</th>
+                <th width="6%">Price</th>
               </tr>
             </thead>
           </table>
         </div>
+        -->
         <!-- active -->
         <table class="active" v-show="!loadingClass">
           <thead>
             <tr>
               <th width="10%">benchMark</th>
-              <th width="10%">Price</th>
+              <th width="10%">PV(万)</th>
               <th width="6%">Delta(万)</th>
               <th width="10%">Delta_Pct(%)</th>
               <th width="6%">Gamma(万)</th>
@@ -206,7 +211,7 @@
               <th width="10%">Theta_Pct(%)</th>
               <th width="6%">Vega(万)</th>
               <th width="10%">Vega_Pct(%)</th>
-              <th width="6%">PV(万)</th>
+              <th width="6%">Price</th>
             </tr>
           </thead>
           <tbody>
