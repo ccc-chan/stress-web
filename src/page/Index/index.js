@@ -338,12 +338,8 @@ export default {
         console.log(err);
       })
 
-    self.$axios.post('/setTodayDate/')
-      .then(res => {
-        self.timeShift = res.data.todayDate;
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    let today = new Date();
+    today.setTime(today.getTime());
+    self.timeShift = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
   },
 }
