@@ -70,12 +70,12 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="价格扰动：">
+            <el-form-item label="标的价格扰动系数：">
               <el-input v-model="queryData.price_bump" placeholder="请输入价格扰动"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="波动率扰动：">
+            <el-form-item label="波动率扰动系数：">
               <el-input v-model="queryData.volatility_bump" placeholder="请输入波动率扰动"></el-input>
             </el-form-item>
           </el-col>
@@ -83,7 +83,7 @@
         <el-row>
           
           <el-col :span="6">
-            <el-form-item label="图形类型：">
+            <el-form-item label="热力图类型：">
               <el-select v-model="queryData.type" placeholder="请选择" >
                 <el-option
                   v-for="item in options"
@@ -96,7 +96,7 @@
           </el-col>
           <el-col :span="10">
             <div class="el-form-item upload">
-              <input class="name-input" type="text" v-model="fileName" placeholder="请上传xls、xlsx格式的Excel文件" readonly>
+              <input class="name-input" type="text" v-model="fileName" placeholder="请上传xls格式的Excel文件" readonly>
               <input class="hide-input ui-input-file" @change="loadFile($event)" type="file" id="excel" name="file">
               <a href="javascript:;" @click="uploadHistory()">上传数据文件</a>
             </div>
@@ -126,7 +126,7 @@
       <table>
         <thead>
           <tr>
-            <th width="10%">benchMark</th>
+            <th width="10%">基准</th>
             <th width="10%">PV(万)</th>
             <th width="6%">Delta(万)</th>
             <th width="10%">Delta_Pct(%)</th>
@@ -201,7 +201,7 @@
         <table class="active" v-show="!loadingClass">
           <thead>
             <tr>
-              <th width="10%">benchMark</th>
+              <th width="10%">ID</th>
               <th width="10%">PV(万)</th>
               <th width="6%">Delta(万)</th>
               <th width="10%">Delta_Pct(%)</th>

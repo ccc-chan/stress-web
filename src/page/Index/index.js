@@ -223,6 +223,7 @@ export default {
           console.log(err);
         })
     },
+
     searchId() {
       let self = this;
       self.tableList = []
@@ -338,8 +339,18 @@ export default {
         console.log(err);
       })
 
-    let today = new Date();
-    today.setTime(today.getTime());
-    self.timeShift = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    //Today is decided by the data, it is not the actual "today".
+
+    self.$axios.post('/setTodayDate/')
+      .then(res => {
+        self.timeShift = res.data.todayDate;
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+    // let today = new Date();
+    // today.setTime(today.getTime());
+    // self.timeShift = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
   },
 }
