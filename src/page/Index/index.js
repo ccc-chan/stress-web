@@ -1,8 +1,4 @@
-import HeatMap from '../../components/echart.vue'
 export default {
-  components: {
-    "heat-map": HeatMap
-  },
   data() {
     return {
       labelPosition: 'right',
@@ -99,16 +95,6 @@ export default {
       }else{
         chartTitle = '单位（%）'
       }
-      
-      heatData.forEach(item => {
-        if (item[2] == 0) {
-          return item[2]  //for the black block in the middle. item[2] = 0.000
-        }else{
-          return item[2]  //I have changed here
-        }
-
-        //  return item[2] = Math.round(item[2] * 10000) / 10000;
-      });
 
       let option = {
         title: {
@@ -236,35 +222,6 @@ export default {
           console.log(err);
         })
     },
-    benchMark(type){
-      let self = this;
-      self.queryData.timeShift = self.timeShift;
-      let oldPrice = self.queryData.price_bump
-      let oldvolat = self.queryData.volatility_bump
-      self.queryData.price_bump = '1.0';
-      self.queryData.volatility_bump = '1.0';
-      let params = {
-        query: self.queryData
-      }
-      if (type == 'id') {
-        self.$axios.post('/searchById/', params)
-          .then(res => {
-            let obj = eval('(' + res.data + ')');
-            self.benchList = self.sum(obj.sum);
-            self.queryData.price_bump = oldPrice
-            self.queryData.volatility_bump = oldvolat
-          })
-          .catch(err => {
-            console.log(err);
-          })
-      }else{
-        self.$axios.post('/searchByWind/', params)
-          .then(res => {
-            let obj = eval('(' + res.data + ')');
-            self.benchList = self.sum(obj.sum);
-          })
-      }
-    },
     searchId() {
       let self = this;
       self.tableList = []
@@ -274,7 +231,8 @@ export default {
       if (check == false) {
         return
       }
-      
+
+      self.loadingClass = true;
       let params = {
         query: self.queryData
       }
@@ -282,11 +240,11 @@ export default {
       self.$axios.post('/searchById/', params)
         .then(res => {
           let obj = eval('(' + res.data + ')');
-          //console.log(res.data)
           self.tableList = self.toFixed(obj.data);
           self.sumList = self.sum(obj.sum);
-          self.benchMark('id');
+          self.benchList = obj.benchMark
           self.selectChart(obj.heatMap);
+          self.loadingClass = false;
         })
         .catch(err => {
           console.log(err);
