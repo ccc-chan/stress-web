@@ -63,7 +63,7 @@ export default {
       sigmaFiles: {},
       loadingClass: false,
       createTime: {},
-      timeShift: "2019-07-08", //works as a placeholder and self.timeshift
+      timeShift: "2017-07-01", //works as a placeholder and self.timeshift
       sumList: [],
       fixedHeader: false,
       hLeft: 0,
@@ -333,6 +333,14 @@ export default {
     self.$axios.post('/createTime/')
       .then(res => {
         self.createTime = res.data;
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+    self.$axios.post('/setTodayDate/')
+      .then(res => {
+        self.timeShift = res.data.todayDate;
       })
       .catch(err => {
         console.log(err);
