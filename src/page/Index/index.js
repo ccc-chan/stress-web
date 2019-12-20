@@ -3,7 +3,7 @@ export default {
     return {
       labelPosition: 'right',
       queryData: {
-        ID: '19461157',
+        ID: 'OTC2019281',
         //contract_name: '000016.SH',
         volatility_bump: '1.0',
         price_bump: '1.0',
@@ -190,6 +190,7 @@ export default {
         self.historyFiles = files;
       }
     },
+
     uploadHistory() {
       let self = this;
 
@@ -217,6 +218,15 @@ export default {
             self.fileName = '';
             self.createTime = res.data;
             alert('历史文件上传成功');
+
+            self.$axios.post('/setTodayDate/')
+              .then(res => {
+                self.timeShift = res.data.todayDate;
+              })
+              .catch(err => {
+                console.log(err);
+              })
+
           }
         })
         .catch(err => {

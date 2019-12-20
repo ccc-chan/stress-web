@@ -103,7 +103,7 @@
           </el-col>
           <el-col :span="8">
             <div class="el-form-item tip">
-              <label for="">历史文件创建时间：</label>
+              <label for="">数据文件创建时间：</label>
               <span>{{createTime.hTime}}</span> 
               <!--<span v-model="createTime.hTime">-->
             </div>
