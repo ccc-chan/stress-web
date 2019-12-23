@@ -331,11 +331,13 @@ export default {
   mounted() {
     let self = this;
     let box = self.$refs.tableScrollBox;
+    /*
     box.addEventListener('scroll', () => {
       var scrollTop = box.scrollTop;
       var fixedHead = self.$refs.tableFixedHead;
-      fixedHead.scrollTop = scrollTop;
+      fixedHead.scrollTop = scrollTop;   //Error -> TypeError: Can not set property of scrollTop as undefined.
     }, false)
+    */
     
   }, 
 
