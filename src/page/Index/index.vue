@@ -96,7 +96,7 @@
           </el-col>
           <el-col :span="10">
             <div class="el-form-item upload">
-              <input class="name-input" type="text" v-model="fileName" placeholder="请上传xls格式的Excel文件" readonly>
+              <input class="name-input" type="text" v-model="fileName" placeholder="请选择xls格式文件再点击上传" readonly>
               <input class="hide-input ui-input-file" @change="loadFile($event)" type="file" id="excel" name="file">
               <a href="javascript:;" @click="uploadHistory()">上传数据文件</a>
             </div>
