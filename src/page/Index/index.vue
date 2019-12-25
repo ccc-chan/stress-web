@@ -70,12 +70,12 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="标的价格扰动系数：">
+            <el-form-item label="标的价格扰动：">
               <el-input v-model="queryData.price_bump" placeholder="请输入价格扰动"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="波动率扰动系数：">
+            <el-form-item label="波动率扰动：">
               <el-input v-model="queryData.volatility_bump" placeholder="请输入波动率扰动"></el-input>
             </el-form-item>
           </el-col>
