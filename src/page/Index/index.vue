@@ -59,8 +59,8 @@
             </el-col>
           </transition> -->
           <el-col :span="6">
-            <el-form-item label="ID：">
-              <el-input v-model="queryData.ID" placeholder="请输入ID"></el-input>
+            <el-form-item label="代码：">
+              <el-input v-model="queryData.ID" placeholder="请输入代码"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -126,7 +126,7 @@
       <table>
         <thead>
           <tr>
-            <th width="10%">基准</th>
+            <th width="10%">Excel基准</th>
             <th width="10%">PV(万)</th>
             <th width="6%">Delta(万)</th>
             <th width="10%">Delta_Pct(%)</th>
