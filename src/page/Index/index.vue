@@ -1,10 +1,11 @@
 <template>
   <div class="index">
     <div class="content">
-      <span class="show" v-if="!show" @click="show = !show">+</span>
-      <span class="show" v-else @click="show = !show">-</span>
+      <!--pannel-->
       <el-form :inline="true" :label-position="labelPosition" class="demo-form-inline">
+        
         <transition-group name="slide-fade">
+          <!--first hidden row-->
           <el-row v-if="show" key="a">
             <el-col :span="6">
               <el-form-item label="1M：">
@@ -27,6 +28,7 @@
               </el-form-item>
             </el-col>
           </el-row>
+          <!--second hidden row-->
           <el-row v-if="show" key="b">
             <el-col :span="6">
               <el-form-item label="1Y：">
@@ -50,6 +52,8 @@
             </el-col>
           </el-row>
         </transition-group>
+
+        <!--first row-->
         <el-row>
           <!-- <transition name="slide-fade">
             <el-col v-if="show" :span="6">
@@ -58,7 +62,7 @@
               </el-form-item>
             </el-col>
           </transition> -->
-          <el-col :span="6">
+          <el-col :span="6" :offset="0">
             <el-form-item label="代码：">
               <el-input v-model="queryData.ID" placeholder="请输入代码"></el-input>
             </el-form-item>
@@ -80,6 +84,8 @@
             </el-form-item>
           </el-col>
         </el-row>
+
+        <!--second row-->
         <el-row>
           
           <el-col :span="6">
@@ -109,14 +115,18 @@
             </div>
           </el-col>
         </el-row>
+
+        <!--Need to be put above the first row in order to click-->
+        <span class="show" v-if="!show" @click="show = !show">+</span>
+        <span class="show" v-else @click="show = !show">-</span>
+
+        <!--button row-->
         <el-row>
           <el-col :span="12" :offset="12">
             <el-form-item class="btn">
               <el-button type="primary" @click="searchId()">查询</el-button>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
         </el-row>
       </el-form>
     </div>
