@@ -3,7 +3,7 @@ export default {
     return {
       labelPosition: 'right',
       queryData: {
-        ID: 'OTC2019281',
+        ID: 'all',
         //contract_name: '000016.SH',
         volatility_bump: '1.0',
         price_bump: '1.0',
@@ -63,7 +63,7 @@ export default {
       sigmaFiles: {},
       loadingClass: false,
       createTime: {},
-      timeShift: "2017-07-01", //works as a placeholder and self.timeshift
+      timeShift: "1995-03-13", //works as a placeholder and self.timeshift
       sumList: [],
       fixedHeader: false,
       hLeft: 0,
