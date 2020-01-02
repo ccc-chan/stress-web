@@ -124,7 +124,7 @@
         <el-row>
           <el-col :span="12" :offset="12">
             <el-form-item class="btn">
-              <el-button type="primary" @click="searchId()">查询</el-button>
+              <el-button type="primary" @click="searchId()">模拟计算</el-button>
             </el-form-item>
           </el-col>
         </el-row>
