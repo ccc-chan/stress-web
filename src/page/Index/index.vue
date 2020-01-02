@@ -186,7 +186,6 @@
           <img src="../../assets/loading.gif" alt="">
         </div>
         <!-- fixed -->
-        <!--
         <div class="fixed-head" ref="tableFixedHead">
           <table>
             <thead>
@@ -206,7 +205,7 @@
             </thead>
           </table>
         </div>
-        -->
+        
         <!-- active -->
         <table class="active" v-show="!loadingClass">
           <thead>
